@@ -68,3 +68,43 @@ def monthly_repayment(balance, annualInterestRate, payment):
         monthly_repayment(balance, annualInterestRate, payment + 10)
 # balnce and annualInterestRate given by checker
 print(monthly_repayment(3329, 0.2, 10))
+
+# Problem 3 - Using Bisection Search to Make the Program Faster
+#
+# In short:
+#
+# Monthly interest rate = (Annual interest rate) / 12.0
+# Monthly payment lower bound = Balance / 12
+# Monthly payment upper bound = (Balance x (1 + Monthly interest rate)12) / 12.0
+#
+# Write a program that uses these bounds and bisection search
+# to find the smallest monthly payment to the cent (no more multiples of $10)
+# such that we can pay off the debt within a year.
+# Try it out with large inputs, and notice how fast it is.
+# Produce the same return value as you did in Problem 2.
+
+def credit_card_bisection(balance, monthly_interest_rate, monthlyPayment):
+    for _ in range(12):
+        Monthly_unpaid_balance = balance - monthlyPayment
+        balance = Monthly_unpaid_balance + monthly_interest_rate * Monthly_unpaid_balance
+    return balance
+
+def bisection_credit_card(balance, annualInterestRate):
+    monthly_interest_rate = annualInterestRate / 12
+    lower = balance / 12
+    upper = balance * pow(1 + monthly_interest_rate, 12) / 12
+    payment = (lower + upper) / 2
+    prev = 0
+    while round(payment, 2) != round(prev, 2):
+        prev = payment
+        a = credit_card_bisection(balance, monthly_interest_rate, payment)
+        if a >= 0:
+            lower = payment
+        else:
+            upper = payment
+        payment = (lower + upper) / 2
+
+    return "Lowest Payment: {0}".format(round(payment, 2))
+
+print(bisection_credit_card(320000, 0.2))
+print(bisection_credit_card(999999, 0.18))
