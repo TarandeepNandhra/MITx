@@ -8,6 +8,7 @@
 # (so be sure to read the docstrings!)
 
 import random
+import string
 
 WORDLIST_FILENAME = "words.txt"
 
@@ -102,8 +103,6 @@ def getAvailableLetters(lettersGuessed):
     #         final += i
     # return final
 
-
-
 def hangman(secretWord):
     '''
     secretWord: string, the secret word to guess.
@@ -126,14 +125,46 @@ def hangman(secretWord):
     '''
     # FILL IN YOUR CODE HERE...
 
+    lives = 8
+    LettersGuessed = []
 
+    print("Welcome to the game, Hangman!")
+    print("I am thinking of a word that is {0} letters long.".format(len(secretWord)))
 
+    while lives != 0:
+        if isWordGuessed(secretWord, LettersGuessed):
+            break
+        print("-------------")
+        print("You have {0} guesses left.".format(lives))
 
+        print("Available letters: {0}".format(getAvailableLetters(LettersGuessed)))
+
+        letter_guessed = (input("Please guess a letter: ")).lower()
+
+        if letter_guessed in LettersGuessed:
+            print("Oops! You've already guessed that letter: {0}".format(getGuessedWord(secretWord, LettersGuessed)))
+            continue
+
+        LettersGuessed += [letter_guessed]
+
+        if letter_guessed in secretWord:
+            print("Good guess: {0}".format(getGuessedWord(secretWord, LettersGuessed)))
+            continue
+        else:
+            print("Oops! That letter is not in my word: {0}".format(getGuessedWord(secretWord, LettersGuessed)))
+
+        lives -= 1
+    print("-------------")
+    if isWordGuessed(secretWord, LettersGuessed):
+        print("Congratulations, you won!")
+    else:
+        print("Sorry, you ran out of guesses. The word was {0}.".format(secretWord))
+    return
 
 
 # When you've completed your hangman function, uncomment these two lines
 # and run this file to test! (hint: you might want to pick your own
 # secretWord while you're testing)
 
-# secretWord = chooseWord(wordlist).lower()
-# hangman(secretWord)
+secretWord = chooseWord(wordlist).lower()
+hangman(secretWord)
