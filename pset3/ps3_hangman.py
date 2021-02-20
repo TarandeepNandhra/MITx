@@ -62,9 +62,25 @@ def getGuessedWord(secretWord, lettersGuessed):
     returns: string, comprised of letters and underscores that represents
       what letters in secretWord have been guessed so far.
     '''
-    # FILL IN YOUR CODE HERE...
 
+    # Recursive implementation
 
+    if secretWord == "":
+        return ""
+    elif secretWord[0] in lettersGuessed:
+        return secretWord[0] + getGuessedWord(secretWord[1 : ], lettersGuessed)
+    else:
+        return "_ " + getGuessedWord(secretWord[1 : ], lettersGuessed)
+
+    # Iterative implementation
+
+    # final = ""
+    # for i in secretWord:
+    #     if i not in lettersGuessed:
+    #         final += "_ "
+    #     else:
+    #         final += i
+    # return final
 
 def getAvailableLetters(lettersGuessed):
     '''
