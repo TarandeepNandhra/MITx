@@ -62,7 +62,6 @@ def getGuessedWord(secretWord, lettersGuessed):
     returns: string, comprised of letters and underscores that represents
       what letters in secretWord have been guessed so far.
     '''
-
     # Recursive implementation
 
     if secretWord == "":
@@ -88,7 +87,21 @@ def getAvailableLetters(lettersGuessed):
     returns: string, comprised of letters that represents what letters have not
       yet been guessed.
     '''
-    # FILL IN YOUR CODE HERE...
+    # >>> print(string.ascii_lowercase)
+    # abcdefghijklmnopqrstuvwxyz
+
+    # Using List comprehension
+
+    return "".join([x for x in string.ascii_lowercase if x not in lettersGuessed])
+
+    # Iterative implementation
+
+    # final = ""
+    # for i in string.ascii_lowercase:
+    #     if i not in lettersGuessed:
+    #         final += i
+    # return final
+
 
 
 def hangman(secretWord):
