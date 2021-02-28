@@ -185,12 +185,7 @@ def calculateHandlen(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    length = 0
-    for i in hand.keys():
-        while hand.get(i, 0) != 0:
-            length += 1
-            hand[i] -= 1
-    return length
+    return sum(list(hand.values()))
 
 def playHand(hand, wordList, n):
     """
