@@ -146,9 +146,10 @@ def updateHand(hand, word):
     returns: dictionary (string -> int)
     """
     # TO DO ... <-- Remove this comment when you code this function
-
-
-
+    final = hand.copy() # copies dict to a new obj, does not mutate hand
+    for i in word:
+        final[i] -= 1
+    return final
 #
 # Problem #3: Test word validity
 #
